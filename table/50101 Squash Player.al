@@ -169,6 +169,10 @@ table 50101 "Squash Player"
                     LocalAppMgt.CheckDigit("Fiscal Code");
             end;
         }
+        field(50100; Member; Boolean)
+        {
+            Caption = 'Member';
+        }
     }
 
     keys

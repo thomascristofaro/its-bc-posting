@@ -20,7 +20,6 @@ page 50102 "Squash Player Card"
                 field(Name; Rec.Name)
                 {
                     ApplicationArea = All;
-                    AssistEdit = true;
                     Importance = Promoted;
                     ShowMandatory = true;
                     ToolTip = 'Specifies the name of the contact. If the contact is a person, you can click the field to see the Name Details window.';
@@ -43,6 +42,10 @@ page 50102 "Squash Player Card"
                     ApplicationArea = RelationshipMgmt;
                     Importance = Promoted;
                     ToolTip = 'Specifies the code of the salesperson who normally handles this contact.';
+                }
+                field(Member; Rec.Member)
+                {
+                    ApplicationArea = All;
                 }
             }
             group(Communication)
