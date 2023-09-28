@@ -157,6 +157,18 @@ table 50101 "Squash Player"
             Caption = 'Image';
             ExtendedDatatype = Person;
         }
+        field(12101; "Fiscal Code"; Code[20])
+        {
+            Caption = 'Fiscal Code';
+
+            trigger OnValidate()
+            var
+                LocalAppMgt: Codeunit LocalApplicationManagement;
+            begin
+                if "Fiscal Code" <> '' then
+                    LocalAppMgt.CheckDigit("Fiscal Code");
+            end;
+        }
     }
 
     keys
