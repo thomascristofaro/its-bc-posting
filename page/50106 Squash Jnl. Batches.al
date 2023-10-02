@@ -80,8 +80,7 @@ page 50106 "Squash Jnl. Batches"
                     ApplicationArea = All;
                     Caption = 'P&ost';
                     Image = PostOrder;
-                    RunObject = Codeunit "Squash Jnl.-B.Post";
-                    ShortCutKey = 'F9';
+                    // RunObject = Codeunit "Squash Jnl.-B.Post";
                     ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
                 }
             }

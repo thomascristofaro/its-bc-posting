@@ -24,13 +24,13 @@ page 50108 "Squash Journal"
                 trigger OnLookup(var Text: Text): Boolean
                 begin
                     CurrPage.SaveRecord();
-                    ResJnlManagement.LookupName(CurrentJnlBatchName, Rec);
+                    SquashJnlManagement.LookupName(CurrentJnlBatchName, Rec);
                     CurrPage.Update(false);
                 end;
 
                 trigger OnValidate()
                 begin
-                    ResJnlManagement.CheckName(CurrentJnlBatchName, Rec);
+                    SquashJnlManagement.CheckName(CurrentJnlBatchName, Rec);
                     CurrentJnlBatchNameOnAfterVali();
                 end;
             }
@@ -261,23 +261,23 @@ page 50108 "Squash Journal"
     begin
         if IsOpenedFromBatch() then begin
             CurrentJnlBatchName := Rec."Journal Batch Name";
-            ResJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
+            SquashJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
             exit;
         end;
-        ResJnlManagement.TemplateSelection(PAGE::"Resource Journal", false, Rec, JnlSelected);
+        SquashJnlManagement.TemplateSelection(PAGE::"Resource Journal", false, Rec, JnlSelected);
         if not JnlSelected then
             Error('');
-        ResJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
+        SquashJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
     end;
 
     var
-        ResJnlManagement: Codeunit ResJnlManagement;
+        SquashJnlManagement: Codeunit SquashJnlManagement;
         CurrentJnlBatchName: Code[10];
 
     local procedure CurrentJnlBatchNameOnAfterVali()
     begin
         CurrPage.SaveRecord();
-        ResJnlManagement.SetName(CurrentJnlBatchName, Rec);
+        SquashJnlManagement.SetName(CurrentJnlBatchName, Rec);
         CurrPage.Update(false);
     end;
 
