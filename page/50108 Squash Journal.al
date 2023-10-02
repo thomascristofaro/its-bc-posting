@@ -264,7 +264,7 @@ page 50108 "Squash Journal"
             SquashJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
             exit;
         end;
-        SquashJnlManagement.TemplateSelection(PAGE::"Resource Journal", false, Rec, JnlSelected);
+        SquashJnlManagement.TemplateSelection(PAGE::"Squash Journal", false, Rec, JnlSelected);
         if not JnlSelected then
             Error('');
         SquashJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
