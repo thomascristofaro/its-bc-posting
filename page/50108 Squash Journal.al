@@ -25,7 +25,6 @@ page 50108 "Squash Journal"
                 begin
                     CurrPage.SaveRecord();
                     ResJnlManagement.LookupName(CurrentJnlBatchName, Rec);
-                    SetControlAppearanceFromBatch();
                     CurrPage.Update(false);
                 end;
 
@@ -246,7 +245,57 @@ page 50108 "Squash Journal"
         }
     }
 
+    // trigger OnAfterGetCurrRecord()
+    // begin
+    //     ResJnlManagement.GetRes("Resource No.", ResName);
+    // end;
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        Rec.SetUpNewLine(xRec);
+    end;
+
+    trigger OnOpenPage()
+    var
+        JnlSelected: Boolean;
+    begin
+        if IsOpenedFromBatch() then begin
+            CurrentJnlBatchName := Rec."Journal Batch Name";
+            ResJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
+            exit;
+        end;
+        ResJnlManagement.TemplateSelection(PAGE::"Resource Journal", false, Rec, JnlSelected);
+        if not JnlSelected then
+            Error('');
+        ResJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
+    end;
+
     var
         ResJnlManagement: Codeunit ResJnlManagement;
         CurrentJnlBatchName: Code[10];
+
+    local procedure CurrentJnlBatchNameOnAfterVali()
+    begin
+        CurrPage.SaveRecord();
+        ResJnlManagement.SetName(CurrentJnlBatchName, Rec);
+        CurrPage.Update(false);
+    end;
+
+    procedure IsOpenedFromBatch(): Boolean
+    var
+        SquashJournalBatch: Record "Squash Journal Batch";
+        TemplateFilter: Text;
+        BatchFilter: Text;
+    begin
+        BatchFilter := Rec.GetFilter("Journal Batch Name");
+        if BatchFilter <> '' then begin
+            TemplateFilter := Rec.GetFilter("Journal Template Name");
+            if TemplateFilter <> '' then
+                SquashJournalBatch.SetFilter("Journal Template Name", TemplateFilter);
+            SquashJournalBatch.SetFilter(Name, BatchFilter);
+            SquashJournalBatch.FindFirst();
+        end;
+
+        exit(((Rec."Journal Batch Name" <> '') and (Rec."Journal Template Name" = '')) or (BatchFilter <> ''));
+    end;
 }

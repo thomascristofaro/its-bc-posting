@@ -186,5 +186,31 @@ table 50105 "Squash Journal Line"
     var
         SquashJnlTemplate: Record "Squash Journal Template";
         SquashJnlBatch: Record "Squash Journal Batch";
+        SquashJnlLine: Record "Squash Journal Line";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+
+    procedure SetUpNewLine(LastSquashJnlLine: Record "Squash Journal Line")
+    begin
+        SquashJnlTemplate.Get("Journal Template Name");
+        SquashJnlBatch.Get("Journal Template Name", "Journal Batch Name");
+        SquashJnlLine.SetRange("Journal Template Name", "Journal Template Name");
+        SquashJnlLine.SetRange("Journal Batch Name", "Journal Batch Name");
+        if SquashJnlLine.FindFirst() then begin
+            "Posting Date" := LastSquashJnlLine."Posting Date";
+            "Document Date" := LastSquashJnlLine."Posting Date";
+            "Document No." := LastSquashJnlLine."Document No.";
+        end else begin
+            "Posting Date" := WorkDate();
+            "Document Date" := WorkDate();
+            if SquashJnlBatch."No. Series" <> '' then begin
+                Clear(NoSeriesMgt);
+                "Document No." := NoSeriesMgt.TryGetNextNo(SquashJnlBatch."No. Series", "Posting Date");
+            end;
+        end;
+        "Recurring Method" := LastSquashJnlLine."Recurring Method";
+        "Source Code" := SquashJnlTemplate."Source Code";
+        "Reason Code" := SquashJnlBatch."Reason Code";
+        "Posting No. Series" := SquashJnlBatch."Posting No. Series";
+    end;
 
 }
