@@ -36,7 +36,11 @@ table 50105 "Squash Journal Line"
         {
             Caption = 'Description';
         }
-        // 11 unità di misura
+        field(11; "Unit of Measure Code"; Code[10])
+        {
+            Caption = 'Unit of Measure Code';
+            TableRelation = "Unit of Measure".Code;// WHERE("Resource No." = FIELD("Resource No."));
+        }
         field(12; Quantity; Decimal)
         {
             Caption = 'Quantity';

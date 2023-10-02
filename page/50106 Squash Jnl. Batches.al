@@ -14,27 +14,27 @@ page 50106 "Squash Jnl. Batches"
                 ShowCaption = false;
                 field(Name; Rec.Name)
                 {
-                    ApplicationArea = Jobs;
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the name of this squash journal.';
                 }
                 field(Description; Rec.Description)
                 {
-                    ApplicationArea = Jobs;
+                    ApplicationArea = All;
                     ToolTip = 'Specifies a description of this batch.';
                 }
                 field("No. Series"; Rec."No. Series")
                 {
-                    ApplicationArea = Jobs;
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the number series from which entry or record numbers are assigned to new entries or records.';
                 }
                 field("Posting No. Series"; Rec."Posting No. Series")
                 {
-                    ApplicationArea = Jobs;
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the number series code used to assign document numbers to ledger entries that are posted from this journal batch.';
                 }
                 field("Reason Code"; Rec."Reason Code")
                 {
-                    ApplicationArea = Jobs;
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the reason code, a supplementary source code that enables you to trace the entry.';
                 }
             }
@@ -60,7 +60,7 @@ page 50106 "Squash Jnl. Batches"
         {
             action("Edit Journal")
             {
-                ApplicationArea = Jobs;
+                ApplicationArea = All;
                 Caption = 'Edit Journal';
                 Image = OpenJournal;
                 ShortCutKey = 'Return';
@@ -77,7 +77,7 @@ page 50106 "Squash Jnl. Batches"
                 Image = Post;
                 action("P&ost")
                 {
-                    ApplicationArea = Jobs;
+                    ApplicationArea = All;
                     Caption = 'P&ost';
                     Image = PostOrder;
                     RunObject = Codeunit "Squash Jnl.-B.Post";
