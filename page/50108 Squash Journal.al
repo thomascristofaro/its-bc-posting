@@ -125,9 +125,127 @@ page 50108 "Squash Journal"
                     Visible = false;
                 }
             }
+            group(FixedGroup)
+            {
+                ShowCaption = false;
+                fixed(FixedControl)
+                {
+                    ShowCaption = false;
+                    group("Player Name")
+                    {
+                        Caption = 'Player Name';
+                        // field(ResName; ResName)
+                        // {
+                        //     ApplicationArea = Jobs;
+                        //     Editable = false;
+                        //     ShowCaption = false;
+                        // }
+                    }
+                    group("Court Name")
+                    {
+                        Caption = 'Court Name';
+                        // field(ResName; ResName)
+                        // {
+                        //     ApplicationArea = Jobs;
+                        //     Editable = false;
+                        //     ShowCaption = false;
+                        // }
+                    }
+                }
+            }
         }
-
     }
+
+    actions
+    {
+        area(navigation)
+        {
+            group("Squash Player")
+            {
+                Caption = 'Squash Player';
+                Image = Customer;
+                action(Card)
+                {
+                    ApplicationArea = Jobs;
+                    Caption = 'Card';
+                    Image = EditLines;
+                    // RunObject = Page "Resource Card";
+                    // RunPageLink = "No." = FIELD("Resource No.");
+                }
+                action("Ledger E&ntries")
+                {
+                    ApplicationArea = Jobs;
+                    Caption = 'Ledger E&ntries';
+                    Image = Ledger;
+                    // RunObject = Page "Resource Ledger Entries";
+                    // RunPageLink = "Resource No." = FIELD("Resource No.");
+                    // RunPageView = SORTING("Resource No.");
+                }
+            }
+        }
+        area(processing)
+        {
+            group("P&osting")
+            {
+                Caption = 'P&osting';
+                Image = Post;
+                action(Post)
+                {
+                    ApplicationArea = Jobs;
+                    Caption = 'P&ost';
+                    Image = PostOrder;
+                    ShortCutKey = 'F9';
+                    ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
+
+                    trigger OnAction()
+                    begin
+                        // CODEUNIT.Run(CODEUNIT::"Squash Jnl.-Post", Rec);
+                        CurrentJnlBatchName := Rec.GetRangeMax("Journal Batch Name");
+                        CurrPage.Update(false);
+                    end;
+                }
+            }
+            // group("Page")
+            // {
+            //     Caption = 'Page';
+            //     group(Errors)
+            //     {
+            //         Caption = 'Issues';
+            //         Image = ErrorLog;
+            //         Visible = BackgroundErrorCheck;
+            //         action(ShowLinesWithErrors)
+            //         {
+            //             ApplicationArea = Basic, Suite;
+            //             Caption = 'Show Lines with Issues';
+            //             Image = Error;
+            //             Visible = BackgroundErrorCheck;
+            //             Enabled = not ShowAllLinesEnabled;
+            //             ToolTip = 'View a list of journal lines that have issues before you post the journal.';
+
+            //             trigger OnAction()
+            //             begin
+            //                 SwitchLinesWithErrorsFilter(ShowAllLinesEnabled);
+            //             end;
+            //         }
+            //         action(ShowAllLines)
+            //         {
+            //             ApplicationArea = Basic, Suite;
+            //             Caption = 'Show All Lines';
+            //             Image = ExpandAll;
+            //             Visible = BackgroundErrorCheck;
+            //             Enabled = ShowAllLinesEnabled;
+            //             ToolTip = 'View all journal lines, including lines with and without issues.';
+
+            //             trigger OnAction()
+            //             begin
+            //                 SwitchLinesWithErrorsFilter(ShowAllLinesEnabled);
+            //             end;
+            //         }
+            //     }
+            // }
+        }
+    }
+
     var
         ResJnlManagement: Codeunit ResJnlManagement;
         CurrentJnlBatchName: Code[10];
