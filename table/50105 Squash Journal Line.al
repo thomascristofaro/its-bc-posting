@@ -13,10 +13,10 @@ table 50105 "Squash Journal Line"
         {
             Caption = 'Line No.';
         }
-        // field(3; "Entry Type"; Enum "Res. Journal Line Entry Type")
-        // {
-        //     Caption = 'Entry Type';
-        // }
+        field(3; "Entry Type"; Enum "Squash Journal Line Entry Type")
+        {
+            Caption = 'Entry Type';
+        }
         field(4; "Document No."; Code[20])
         {
             Caption = 'Document No.';
@@ -28,13 +28,30 @@ table 50105 "Squash Journal Line"
             trigger OnValidate()
             begin
                 TestField("Posting Date");
-                Validate("Document Date", "Posting Date");
+                Validate("Reservation Date", "Posting Date");
             end;
         }
-        // 6 7 Squash Player/Court No
+        field(6; "Squash Player No."; Code[20])
+        {
+            Caption = 'Squash Player No.';
+            TableRelation = "Squash Player";
+        }
+        field(7; "Squash Court No."; Code[20])
+        {
+            Caption = 'Squash Court No.';
+            TableRelation = "Squash Court";
+        }
         field(8; Description; Text[100])
         {
             Caption = 'Description';
+        }
+        field(9; "From Time"; Time)
+        {
+            Caption = 'From Time';
+        }
+        field(10; "To Time"; Time)
+        {
+            Caption = 'To Time';
         }
         field(11; "Unit of Measure Code"; Code[10])
         {
@@ -102,6 +119,14 @@ table 50105 "Squash Journal Line"
                 "Unit Price" := Round("Total Price" / Quantity, 0.01);
             end;
         }
+        field(19; "Applies-to Entry No."; Integer)
+        {
+            Caption = 'Applies-to Entry No.';
+        }
+        field(20; Chargeable; Boolean)
+        {
+            Caption = 'Chargeable';
+        }
         field(21; "Source Code"; Code[10])
         {
             Caption = 'Source Code';
@@ -143,9 +168,9 @@ table 50105 "Squash Journal Line"
             Caption = 'Gen. Prod. Posting Group';
             TableRelation = "Gen. Product Posting Group";
         }
-        field(30; "Document Date"; Date)
+        field(30; "Reservation Date"; Date)
         {
-            Caption = 'Document Date';
+            Caption = 'Reservation Date';
         }
         field(31; "External Document No."; Code[35])
         {
@@ -156,7 +181,11 @@ table 50105 "Squash Journal Line"
             Caption = 'Posting No. Series';
             TableRelation = "No. Series";
         }
-        // 34 customer
+        field(34; "Bill-to Customer No."; Code[20])
+        {
+            Caption = 'Bill-to Customer No.';
+            TableRelation = Customer;
+        }
         field(35; "Qty. per Unit of Measure"; Decimal)
         {
             Caption = 'Qty. per Unit of Measure';
@@ -197,11 +226,11 @@ table 50105 "Squash Journal Line"
         SquashJnlLine.SetRange("Journal Batch Name", "Journal Batch Name");
         if SquashJnlLine.FindFirst() then begin
             "Posting Date" := LastSquashJnlLine."Posting Date";
-            "Document Date" := LastSquashJnlLine."Posting Date";
+            "Reservation Date" := LastSquashJnlLine."Posting Date";
             "Document No." := LastSquashJnlLine."Document No.";
         end else begin
             "Posting Date" := WorkDate();
-            "Document Date" := WorkDate();
+            "Reservation Date" := WorkDate();
             if SquashJnlBatch."No. Series" <> '' then begin
                 Clear(NoSeriesMgt);
                 "Document No." := NoSeriesMgt.TryGetNextNo(SquashJnlBatch."No. Series", "Posting Date");

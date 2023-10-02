@@ -42,17 +42,17 @@ page 50108 "Squash Journal"
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies the date when you want to assign.';
                 }
-                field("Document Date"; Rec."Document Date")
+                field("Reservation Date"; Rec."Reservation Date")
                 {
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies the date when the related document was created.';
                     Visible = false;
                 }
-                // field("Entry Type"; Rec."Entry Type")
-                // {
-                //     ApplicationArea = Jobs;
-                //     ToolTip = 'Specifies an entry type for each line.';
-                // }
+                field("Entry Type"; Rec."Entry Type")
+                {
+                    ApplicationArea = Jobs;
+                    ToolTip = 'Specifies an entry type for each line.';
+                }
                 field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = Jobs;
@@ -64,6 +64,14 @@ page 50108 "Squash Journal"
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies a document number that refers to the customer''s or vendor''s numbering system.';
                     Visible = false;
+                }
+                field("Squash Player No."; Rec."Squash Player No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Squash Court No."; Rec."Squash Court No.")
+                {
+                    ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
                 {
@@ -81,6 +89,14 @@ page 50108 "Squash Journal"
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies the item''s product type to link transactions made for this item with the appropriate general ledger account according to the general posting setup.';
                     Visible = false;
+                }
+                field("From Time"; Rec."From Time")
+                {
+                    ApplicationArea = All;
+                }
+                field("To Time"; Rec."To Time")
+                {
+                    ApplicationArea = All;
                 }
                 field(Quantity; Rec.Quantity)
                 {
@@ -116,6 +132,14 @@ page 50108 "Squash Journal"
                 {
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies the total price on the journal line.';
+                }
+                field(Chargeable; Rec.Chargeable)
+                {
+                    ApplicationArea = All;
+                }
+                field("Bill-to Customer No."; Rec."Bill-to Customer No.")
+                {
+                    ApplicationArea = All;
                 }
                 field("Reason Code"; Rec."Reason Code")
                 {
