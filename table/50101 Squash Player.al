@@ -1,5 +1,9 @@
 table 50101 "Squash Player"
 {
+    Caption = 'Squash Player';
+    DrillDownPageID = "Squash Player List";
+    LookupPageID = "Squash Player List";
+
     fields
     {
         field(1; "No."; Code[20])

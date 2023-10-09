@@ -1,6 +1,10 @@
 table 50102 "Squash Court"
 {
 
+    Caption = 'Squash Court';
+    DrillDownPageID = "Squash Court List";
+    LookupPageID = "Squash Court List";
+
     fields
     {
         field(1; "No."; Code[20])
