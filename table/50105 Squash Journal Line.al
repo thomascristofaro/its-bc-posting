@@ -48,10 +48,22 @@ table 50105 "Squash Journal Line"
         field(9; "From Time"; Time)
         {
             Caption = 'From Time';
+            TableRelation = "Reservation Time";
+
+            trigger OnValidate()
+            begin
+                CalcQty();
+            end;
         }
         field(10; "To Time"; Time)
         {
             Caption = 'To Time';
+            TableRelation = "Reservation Time";
+
+            trigger OnValidate()
+            begin
+                CalcQty();
+            end;
         }
         field(11; "Unit of Measure Code"; Code[10])
         {
@@ -240,6 +252,25 @@ table 50105 "Squash Journal Line"
         "Source Code" := SquashJnlTemplate."Source Code";
         "Reason Code" := SquashJnlBatch."Reason Code";
         "Posting No. Series" := SquashJnlBatch."Posting No. Series";
+    end;
+
+    procedure CalcQty()
+    var
+        ResTime: Record "Reservation Time";
+    begin
+        if ("From Time" = 0T) or ("To Time" = 0T) then
+            exit;
+        if "To Time" <= "From Time" then
+            FieldError("To Time");
+
+        // H := ("To Time" - "From Time")/(3600)
+
+        ResTime.SetFilter("Reservation Time", '>=%1&<%2', "From Time", "To Time");
+        ResTime.CalcSums(Duration);
+        Validate(Quantity, ResTime.Duration);
+
+        ResTime.FindFirst();
+        "Unit of Measure Code" := ResTime."Unit of Measure Code";
     end;
 
 }
