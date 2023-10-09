@@ -171,7 +171,7 @@ table 50105 "Squash Journal Line"
         field(23; "Journal Batch Name"; Code[10])
         {
             Caption = 'Journal Batch Name';
-            TableRelation = "Res. Journal Batch".Name WHERE("Journal Template Name" = FIELD("Journal Template Name"));
+            TableRelation = "Squash Journal Batch".Name WHERE("Journal Template Name" = FIELD("Journal Template Name"));
         }
         field(24; "Reason Code"; Code[10])
         {
