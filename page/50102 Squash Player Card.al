@@ -47,6 +47,10 @@ page 50102 "Squash Player Card"
                 {
                     ApplicationArea = All;
                 }
+                field("Bill-To Customer No."; Rec."Bill-To Customer No.")
+                {
+                    ApplicationArea = All;
+                }
             }
             group(Communication)
             {

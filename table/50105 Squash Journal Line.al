@@ -35,11 +35,34 @@ table 50105 "Squash Journal Line"
         {
             Caption = 'Squash Player No.';
             TableRelation = "Squash Player";
+
+            trigger OnValidate()
+            var
+                SquashPlayer: Record "Squash Player";
+            begin
+                if SquashPlayer.Get("Squash Player No.") then begin
+                    Validate("Bill-to Customer No.", SquashPlayer."Bill-To Customer No.");
+                    FindSquashPlayerPrice();
+                end
+            end;
         }
         field(7; "Squash Court No."; Code[20])
         {
             Caption = 'Squash Court No.';
             TableRelation = "Squash Court";
+
+            trigger OnValidate()
+            var
+                SquashCourt: Record "Squash Court";
+            begin
+                if SquashCourt.Get("Squash Court No.") then begin
+                    Description := SquashCourt.Description;
+                    Validate("Unit Cost", SquashCourt."Unit Cost");
+
+                    "Gen. Prod. Posting Group" := SquashCourt."Gen. Prod. Posting Group";
+                    FindSquashPlayerPrice();
+                end
+            end;
         }
         field(8; Description; Text[100])
         {
@@ -197,6 +220,14 @@ table 50105 "Squash Journal Line"
         {
             Caption = 'Bill-to Customer No.';
             TableRelation = Customer;
+
+            trigger OnValidate()
+            var
+                Customer: Record Customer;
+            begin
+                if Customer.Get("Bill-to Customer No.") then
+                    "Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
+            end;
         }
         field(35; "Qty. per Unit of Measure"; Decimal)
         {
@@ -271,6 +302,22 @@ table 50105 "Squash Journal Line"
 
         ResTime.FindFirst();
         "Unit of Measure Code" := ResTime."Unit of Measure Code";
+    end;
+
+    procedure FindSquashPlayerPrice()
+    var
+        SquashCourt: Record "Squash Court";
+        SquashPlayer: Record "Squash Player";
+    begin
+        if ("Squash Court No." <> '') and ("Squash Player No." <> '') then begin
+            SquashCourt.Get("Squash Court No.");
+            SquashPlayer.Get("Squash Player No.");
+
+            if SquashPlayer.Member then
+                Validate("Unit Price", SquashCourt."Member Price")
+            else
+                Validate("Unit Price", SquashCourt."Not Member Price")
+        end
     end;
 
 }

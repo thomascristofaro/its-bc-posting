@@ -173,6 +173,11 @@ table 50101 "Squash Player"
         {
             Caption = 'Member';
         }
+        field(50101; "Bill-To Customer No."; Code[20])
+        {
+            Caption = 'Bill-To Customer No.';
+            TableRelation = Customer;
+        }
     }
 
     keys
