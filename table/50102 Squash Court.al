@@ -25,6 +25,37 @@ table 50102 "Squash Court"
         {
             Caption = 'Search Description';
         }
+        field(4; "Member Price"; Decimal)
+        {
+            Caption = 'Member Price';
+        }
+        field(5; "Not Member Price"; Decimal)
+        {
+            Caption = 'Not Member Price';
+        }
+        field(6; "Unit Cost"; Decimal)
+        {
+            Caption = 'Unit Cost';
+        }
+        field(7; "Gen. Prod. Posting Group"; Code[20])
+        {
+            Caption = 'Gen. Prod. Posting Group';
+            TableRelation = "Gen. Product Posting Group";
+
+            trigger OnValidate()
+            var
+                GenProdPostGrp: Record "Gen. Product Posting Group";
+            begin
+                if GenProdPostGrp.Get("Gen. Prod. Posting Group") then
+                    if "VAT Prod. Posting Group" = '' then
+                        "VAT Prod. Posting Group" := GenProdPostGrp."Def. VAT Prod. Posting Group";
+            end;
+        }
+        field(8; "VAT Prod. Posting Group"; Code[20])
+        {
+            Caption = 'VAT Prod. Posting Group';
+            TableRelation = "VAT Product Posting Group";
+        }
         field(107; "No. Series"; Code[20])
         {
             Caption = 'No. Series';

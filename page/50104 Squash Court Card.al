@@ -30,7 +30,26 @@ page 50104 "Squash Court Card"
                     Importance = Additional;
                     ToolTip = 'Specifies an alternate Description that you can use to search for the record in question when you cannot remember the value in the Description field.';
                 }
-
+                field("Member Price"; Rec."Member Price")
+                {
+                    ApplicationArea = All;
+                }
+                field("Not Member Price"; Rec."Not Member Price")
+                {
+                    ApplicationArea = All;
+                }
+                field("Unit Cost"; Rec."Unit Cost")
+                {
+                    ApplicationArea = All;
+                }
+                field("Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group")
+                {
+                    ApplicationArea = All;
+                }
+                field("VAT Prod. Posting Group"; Rec."VAT Prod. Posting Group")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }
