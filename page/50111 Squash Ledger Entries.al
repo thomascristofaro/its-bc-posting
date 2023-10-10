@@ -38,7 +38,6 @@ page 50111 "Squash Ledger Entries"
                 {
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies the number of the Squash group.';
-                    Visible = false;
                 }
                 field(Description; Rec.Description)
                 {
@@ -62,12 +61,6 @@ page 50111 "Squash Ledger Entries"
                 {
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies how each unit of the item or Squash is measured, such as in pieces or hours. By default, the value in the Base Unit of Measure field on the item or Squash card is inserted.';
-                }
-                field("Direct Unit Cost"; Rec."Direct Unit Cost")
-                {
-                    ApplicationArea = Jobs;
-                    ToolTip = 'Specifies the cost of one unit of the selected item or Squash.';
-                    Visible = false;
                 }
                 field("Unit Cost"; Rec."Unit Cost")
                 {
@@ -122,6 +115,10 @@ page 50111 "Squash Ledger Entries"
                     Visible = false;
                 }
                 field("Bill-to Customer No."; Rec."Bill-to Customer No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Applies-to Entry No."; Rec."Applies-to Entry No.")
                 {
                     ApplicationArea = All;
                 }

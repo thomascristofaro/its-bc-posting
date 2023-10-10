@@ -56,11 +56,6 @@ table 50108 "Squash Ledger Entry"
             Caption = 'Quantity';
             DecimalPlaces = 0 : 5;
         }
-        field(12; "Direct Unit Cost"; Decimal)
-        {
-            AutoFormatType = 2;
-            Caption = 'Direct Unit Cost';
-        }
         field(13; "Unit Cost"; Decimal)
         {
             AutoFormatType = 2;
@@ -199,7 +194,6 @@ table 50108 "Squash Ledger Entry"
         "To Time" := SquashJnlLine."To Time";
         "Unit of Measure Code" := SquashJnlLine."Unit of Measure Code";
         Quantity := SquashJnlLine.Quantity;
-        "Direct Unit Cost" := SquashJnlLine."Direct Unit Cost";
         "Unit Cost" := SquashJnlLine."Unit Cost";
         "Total Cost" := SquashJnlLine."Total Cost";
         "Unit Price" := SquashJnlLine."Unit Price";
@@ -212,6 +206,7 @@ table 50108 "Squash Ledger Entry"
         "Gen. Prod. Posting Group" := SquashJnlLine."Gen. Prod. Posting Group";
         "No. Series" := SquashJnlLine."Posting No. Series";
         "Qty. per Unit of Measure" := SquashJnlLine."Qty. per Unit of Measure";
+        Chargeable := SquashJnlLine.Chargeable;
     end;
 }
 

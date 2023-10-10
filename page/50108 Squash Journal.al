@@ -108,11 +108,6 @@ page 50108 "Squash Journal"
                     ApplicationArea = Jobs;
                     ToolTip = 'Specifies how each unit of the item or resource is measured, such as in pieces or hours. By default, the value in the Base Unit of Measure field on the item or resource card is inserted.';
                 }
-                field("Direct Unit Cost"; Rec."Direct Unit Cost")
-                {
-                    ApplicationArea = Jobs;
-                    ToolTip = 'Specifies the cost of one unit of the selected item or resource.';
-                }
                 field("Unit Cost"; Rec."Unit Cost")
                 {
                     ApplicationArea = Jobs;

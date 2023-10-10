@@ -104,12 +104,6 @@ table 50105 "Squash Journal Line"
                 Validate("Unit Price");
             end;
         }
-        field(13; "Direct Unit Cost"; Decimal)
-        {
-            AutoFormatType = 2;
-            Caption = 'Direct Unit Cost';
-            MinValue = 0;
-        }
         field(14; "Unit Cost"; Decimal)
         {
             AutoFormatType = 2;
@@ -161,6 +155,7 @@ table 50105 "Squash Journal Line"
         field(20; Chargeable; Boolean)
         {
             Caption = 'Chargeable';
+            InitValue = true;
         }
         field(21; "Source Code"; Code[10])
         {
