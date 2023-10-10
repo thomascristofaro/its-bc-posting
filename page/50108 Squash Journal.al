@@ -222,7 +222,7 @@ page 50108 "Squash Journal"
 
                     trigger OnAction()
                     begin
-                        // CODEUNIT.Run(CODEUNIT::"Squash Jnl.-Post", Rec);
+                        CODEUNIT.Run(CODEUNIT::"Squash Jnl.-Post", Rec);
                         CurrentJnlBatchName := Rec.GetRangeMax("Journal Batch Name");
                         CurrPage.Update(false);
                     end;
