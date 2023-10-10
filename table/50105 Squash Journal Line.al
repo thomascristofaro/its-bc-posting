@@ -261,6 +261,13 @@ table 50105 "Squash Journal Line"
         SquashJnlLine: Record "Squash Journal Line";
         NoSeriesMgt: Codeunit NoSeriesManagement;
 
+    procedure EmptyLine(): Boolean
+    begin
+        exit(
+            (("Squash Player No." = '') or ("Squash Court No." = ''))
+            and (Quantity = 0));
+    end;
+
     procedure SetUpNewLine(LastSquashJnlLine: Record "Squash Journal Line")
     begin
         SquashJnlTemplate.Get("Journal Template Name");
