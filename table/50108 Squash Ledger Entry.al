@@ -217,6 +217,7 @@ table 50108 "Squash Ledger Entry"
         "No. Series" := SquashJnlLine."Posting No. Series";
         "Qty. per Unit of Measure" := SquashJnlLine."Qty. per Unit of Measure";
         Chargeable := SquashJnlLine.Chargeable;
+        "Applies-to Entry No." := SquashJnlLine."Applies-to Entry No.";
     end;
 }
 
