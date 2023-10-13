@@ -97,9 +97,10 @@ codeunit 50100 "Squash Management"
 
         SquashJnlLine."Entry Type" := SquashJnlLine."Entry Type"::Invoice;
         SquashJnlLine."Document No." := SalesLine."Document No.";
-        SquashJnlLine."Posting Date" := SalesLine."Posting Date";
+        SquashJnlLine."Posting Date" := WorkDate();
         SquashJnlLine.Quantity := OldSquashLedEntry.Quantity;
         SquashJnlLine.Chargeable := false;
+        SquashJnlLine."Applies-to Entry No." := OldSquashLedEntry."Entry No.";
 
         SquashJnlLine."External Document No." := OldSquashLedEntry."External Document No.";
         SquashJnlLine."Reservation Date" := OldSquashLedEntry."Reservation Date";
