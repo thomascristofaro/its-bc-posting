@@ -97,6 +97,11 @@ table 50108 "Squash Ledger Entry"
         {
             Caption = 'Chargeable';
             InitValue = true;
+
+            trigger OnValidate()
+            begin
+                Open := Chargeable;
+            end;
         }
         field(23; "Journal Batch Name"; Code[10])
         {
@@ -138,6 +143,11 @@ table 50108 "Squash Ledger Entry"
         {
             Caption = 'Bill-to Customer No.';
             TableRelation = Customer;
+        }
+        field(35; Open; Boolean)
+        {
+            Caption = 'Open';
+            InitValue = true;
         }
     }
 

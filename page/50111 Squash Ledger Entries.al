@@ -143,4 +143,21 @@ page 50111 "Squash Ledger Entries"
             }
         }
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(CreateInvoice)
+            {
+                Caption = 'Create Invoice';
+                Image = Create;
+
+                trigger OnAction()
+                begin
+
+                end;
+            }
+        }
+    }
 }
