@@ -154,8 +154,10 @@ page 50111 "Squash Ledger Entries"
                 Image = Create;
 
                 trigger OnAction()
+                var
+                    SquashMgmt: Codeunit "Squash Management";
                 begin
-
+                    SquashMgmt.CreateInvoice();
                 end;
             }
         }

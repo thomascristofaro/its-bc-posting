@@ -39,7 +39,7 @@ codeunit 50100 "Squash Management"
             until SquashLedEntry.Next() = 0;
     end;
 
-    procedure CreateSalesHeader(Customer: Code[20];
+    local procedure CreateSalesHeader(Customer: Code[20];
                                 var SalesHeader: Record "Sales Header")
     begin
         Clear(SalesHeader);
@@ -49,7 +49,7 @@ codeunit 50100 "Squash Management"
         SalesHeader.Insert(true);
     end;
 
-    procedure CreateSalesLine(SalesHeader: Record "Sales Header";
+    local procedure CreateSalesLine(SalesHeader: Record "Sales Header";
                                 SquashLedEntry: Record "Squash Ledger Entry";
                                 LineNo: Integer)
     var
