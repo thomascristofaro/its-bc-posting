@@ -66,6 +66,7 @@ codeunit 50100 "Squash Management"
 
         SalesLine.Validate(Type, SalesLine.Type::"G/L Account");
         SalesLine.Validate("No.", GenPstSetup."Sales Account");
+        SalesLine.Validate("Sell-to Customer No.", SalesHeader."Sell-to Customer No.");
 
         SalesLine.Description := SquashLedEntry.Description;
         SalesLine.Validate(Quantity, SquashLedEntry.Quantity);
@@ -80,10 +81,49 @@ codeunit 50100 "Squash Management"
     local procedure OnPostSalesLineOnBeforePostSalesLine(SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; GenJnlLineDocNo: Code[20]; GenJnlLineExtDocNo: Code[35]; GenJnlLineDocType: Enum "Gen. Journal Document Type"; SrcCode: Code[10]; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; var IsHandled: Boolean)
     begin
         if SalesLine."Applies-to Squash Entry No." <> 0 then
-            PostSquashJnlLn();
+            PostSquashJnlLn(SalesLine);
     end;
 
-    procedure PostSquashJnlLn()
+    procedure PostSquashJnlLn(SalesLine: Record "Sales Line")
+    var
+        OldSquashLedEntry: Record "Squash Ledger Entry";
+        SquashJnlLine: Record "Squash Journal Line";
+        SquashPostLine: Codeunit "Squash Jnl.-Post Line";
     begin
+        OldSquashLedEntry.Get(SalesLine."Applies-to Squash Entry No.");
+        OldSquashLedEntry.TestField(Open);
+        OldSquashLedEntry.TestField("Bill-to Customer No.", SalesLine."Bill-to Customer No.");
+
+
+        SquashJnlLine."Entry Type" := SquashJnlLine."Entry Type"::Invoice;
+        SquashJnlLine."Document No." := SalesLine."Document No.";
+        SquashJnlLine."Posting Date" := SalesLine."Posting Date";
+        SquashJnlLine.Quantity := -OldSquashLedEntry.Quantity;
+        SquashJnlLine.Chargeable := false;
+
+        SquashJnlLine."External Document No." := OldSquashLedEntry."External Document No.";
+        SquashJnlLine."Reservation Date" := OldSquashLedEntry."Reservation Date";
+        SquashJnlLine."Squash Court No." := OldSquashLedEntry."Squash Court No.";
+        SquashJnlLine."Squash Player No." := OldSquashLedEntry."Squash Player No.";
+        SquashJnlLine.Description := OldSquashLedEntry.Description;
+        SquashJnlLine."From Time" := OldSquashLedEntry."From Time";
+        SquashJnlLine."To Time" := OldSquashLedEntry."To Time";
+        SquashJnlLine."Unit of Measure Code" := OldSquashLedEntry."Unit of Measure Code";
+        SquashJnlLine."Unit Cost" := OldSquashLedEntry."Unit Cost";
+        SquashJnlLine."Total Cost" := OldSquashLedEntry."Total Cost";
+        SquashJnlLine."Unit Price" := OldSquashLedEntry."Unit Price";
+        SquashJnlLine."Total Price" := OldSquashLedEntry."Total Price";
+        SquashJnlLine."Source Code" := OldSquashLedEntry."Source Code";
+        SquashJnlLine."Journal Batch Name" := OldSquashLedEntry."Journal Batch Name";
+        SquashJnlLine."Reason Code" := OldSquashLedEntry."Reason Code";
+        SquashJnlLine."Bill-to Customer No." := OldSquashLedEntry."Bill-to Customer No.";
+        SquashJnlLine."Gen. Bus. Posting Group" := OldSquashLedEntry."Gen. Bus. Posting Group";
+        SquashJnlLine."Gen. Prod. Posting Group" := OldSquashLedEntry."Gen. Prod. Posting Group";
+        SquashJnlLine."Posting No. Series" := OldSquashLedEntry."No. Series";
+        SquashJnlLine."Qty. per Unit of Measure" := OldSquashLedEntry."Qty. per Unit of Measure";
+
+        SquashPostLine.RunWithCheck(SquashJnlLine);
+
+
     end;
 }
