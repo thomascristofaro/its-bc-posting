@@ -75,4 +75,15 @@ codeunit 50100 "Squash Management"
         SalesLine."Applies-to Squash Entry No." := SquashLedEntry."Entry No.";
         SalesLine.Insert(true);
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnPostSalesLineOnBeforePostSalesLine', '', false, false)]
+    local procedure OnPostSalesLineOnBeforePostSalesLine(SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; GenJnlLineDocNo: Code[20]; GenJnlLineExtDocNo: Code[35]; GenJnlLineDocType: Enum "Gen. Journal Document Type"; SrcCode: Code[10]; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; var IsHandled: Boolean)
+    begin
+        if SalesLine."Applies-to Squash Entry No." <> 0 then
+            PostSquashJnlLn();
+    end;
+
+    procedure PostSquashJnlLn()
+    begin
+    end;
 }
