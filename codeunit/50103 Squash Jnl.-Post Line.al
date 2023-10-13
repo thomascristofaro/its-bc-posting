@@ -70,6 +70,7 @@ codeunit 50103 "Squash Jnl.-Post Line"
             SquashLedgEntry.Quantity := -SquashLedgEntry.Quantity;
             SquashLedgEntry."Total Cost" := -SquashLedgEntry."Total Cost";
             SquashLedgEntry."Total Price" := -SquashLedgEntry."Total Price";
+            SquashLedgEntry.Open := false;
         end;
         SquashLedgEntry."User ID" := UserId;
         SquashLedgEntry."Entry No." := NextEntryNo;

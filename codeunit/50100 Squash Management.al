@@ -98,7 +98,7 @@ codeunit 50100 "Squash Management"
         SquashJnlLine."Entry Type" := SquashJnlLine."Entry Type"::Invoice;
         SquashJnlLine."Document No." := SalesLine."Document No.";
         SquashJnlLine."Posting Date" := SalesLine."Posting Date";
-        SquashJnlLine.Quantity := -OldSquashLedEntry.Quantity;
+        SquashJnlLine.Quantity := OldSquashLedEntry.Quantity;
         SquashJnlLine.Chargeable := false;
 
         SquashJnlLine."External Document No." := OldSquashLedEntry."External Document No.";
@@ -124,6 +124,7 @@ codeunit 50100 "Squash Management"
 
         SquashPostLine.RunWithCheck(SquashJnlLine);
 
-
+        OldSquashLedEntry.Open := false;
+        OldSquashLedEntry.Modify();
     end;
 }
