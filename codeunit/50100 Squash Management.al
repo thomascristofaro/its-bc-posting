@@ -1,5 +1,18 @@
 codeunit 50100 "Squash Management"
 {
+    // trigger che può essere schedulato
+    // nel nostro caso vogliamo lanciare la 
+    // registrazione per le squash journal line
+    trigger OnRun()
+    var
+        SquashJnlLine: Record "Squash Journal Line";
+    begin
+        SquashJnlLine.SetRange("Journal Template Name", 'SQUASH');
+        SquashJnlLine.SetRange("Journal Batch Name", 'DEFAULT');
+        if SquashJnlLine.FindFirst() then
+            CODEUNIT.Run(CODEUNIT::"Squash Jnl.-Post Batch", SquashJnlLine);
+    end;
+
     procedure UpdateSquashPlayer(Contact: Record Contact; ContBusRel: Record "Contact Business Relation")
     var
         SquashPlayer: Record "Squash Player";
