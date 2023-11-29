@@ -172,7 +172,6 @@ codeunit 50100 "Squash Management"
                 Error('Expected object');
 
             LoadPlayerFromJSON(JToken.AsObject());
-            Sleep(500);
             Counter += 1;
             Progress.Update();
         end;
