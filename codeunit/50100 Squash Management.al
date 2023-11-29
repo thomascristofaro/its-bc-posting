@@ -141,4 +141,84 @@ codeunit 50100 "Squash Management"
         OldSquashLedEntry.Open := false;
         OldSquashLedEntry.Modify();
     end;
+
+    procedure LoadPlayerFromAPI()
+    var
+        Client: HttpClient;
+        Response: HttpResponseMessage;
+        JText: Text;
+        JToken: JsonToken;
+        JArray: JsonArray;
+        I: Integer;
+        Progress: Dialog;
+        Text000: Label 'Loading Player: #1';
+        Counter: Integer;
+    begin
+        Client.Get('https://jsonplaceholder.typicode.com/users', Response);
+        if not Response.IsSuccessStatusCode then
+            Error('Status %1 \Error: %2', Response.HttpStatusCode, Response.ReasonPhrase);
+
+        Response.Content.ReadAs(JText);
+        JToken.ReadFrom(JText);
+        if not JToken.IsArray() then
+            Error('Expected array');
+
+        JArray := JToken.AsArray();
+        Counter := 0;
+        Progress.Open(Text000, Counter);
+        for I := 0 to JArray.Count() - 1 do begin
+            JArray.Get(I, JToken);
+            if not JToken.IsObject() then
+                Error('Expected object');
+
+            LoadPlayerFromJSON(JToken.AsObject());
+            Sleep(500);
+            Counter += 1;
+            Progress.Update();
+        end;
+        Progress.Close();
+    end;
+
+    local procedure LoadPlayerFromJSON(JObject: JsonObject)
+    var
+        Player: Record "Squash Player";
+        JToken: JsonToken;
+        JValue: JsonValue;
+        Address: JsonObject;
+    begin
+        Player.Init();
+
+        JObject.Get('name', JToken);
+        JValue := JToken.AsValue();
+        Player.Name := JValue.AsText();
+
+        JObject.Get('email', JToken);
+        JValue := JToken.AsValue();
+        Player."E-Mail" := JValue.AsText();
+
+        JObject.Get('phone', JToken);
+        JValue := JToken.AsValue();
+        Player."Phone No." := JValue.AsText();
+
+        JObject.Get('website', JToken);
+        JValue := JToken.AsValue();
+        Player."Home Page" := JValue.AsText();
+
+        JObject.Get('address', JToken);
+        Address := JToken.AsObject();
+
+        Address.Get('street', JToken);
+        JValue := JToken.AsValue();
+        Player.Address := JValue.AsText();
+
+        Address.Get('city', JToken);
+        JValue := JToken.AsValue();
+        Player.City := JValue.AsText();
+
+        Address.Get('zipcode', JToken);
+        JValue := JToken.AsValue();
+        Player."Post Code" := JValue.AsText();
+
+        Player.Insert(true);
+    end;
 }

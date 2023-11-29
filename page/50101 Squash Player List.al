@@ -85,4 +85,45 @@ page 50101 "Squash Player List"
             }
         }
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(LoadFromHttp)
+            {
+                ApplicationArea = All;
+                Caption = 'Load from HTTP';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = Import;
+
+                trigger OnAction()
+                var
+                    SquashMgmt: Codeunit "Squash Management";
+                begin
+                    SquashMgmt.LoadPlayerFromAPI();
+                end;
+            }
+            action(DeleteRecords)
+            {
+                ApplicationArea = All;
+                Caption = 'Delete Records';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = Delete;
+
+                trigger OnAction()
+                var
+                    Player: Record "Squash Player";
+                begin
+                    CurrPage.SetSelectionFilter(Player);
+                    if Confirm('Are you sure you want to delete %1 records?', true, Player.Count) then
+                        Player.DeleteAll();
+                end;
+            }
+        }
+    }
 }
